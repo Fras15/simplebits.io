@@ -212,6 +212,7 @@ async function startUp() {
             // upLevel(index);
             // ptc(index);
             // miningLog(index);
+            // faucet(index);
             break;
         }
     }
@@ -270,7 +271,7 @@ async function mining(index) {
 
 async function upLevel(index) {
     if (href === 'https://simplebits.io/stats/') {
-        console.log(index);
+        await sleep(1000);
         while (true) {
             const points = parseInt(document.getElementsByClassName('text-xl font-bold')[0].innerText, 10);
             if (points === 0) {
@@ -285,9 +286,9 @@ async function upLevel(index) {
             } else if (!document.getElementsByTagName('button')[10].disabled) {
                 document.getElementsByTagName('button')[10].click();
             } else if (!document.getElementsByTagName('button')[14].disabled) {
-                // document.getElementsByTagName('button')[14].click();
+                document.getElementsByTagName('button')[14].click();
             } else if (!document.getElementsByTagName('button')[15].disabled) {
-                // document.getElementsByTagName('button')[15].click();
+                document.getElementsByTagName('button')[15].click();
             }
             await sleep(1000);
         }
@@ -348,6 +349,22 @@ async function miningLog(index) {
         window.location.reload();
     } else {
         window.location.reload('https://simplebits.io/mining/log');
+    }
+}
+
+async function faucet(index) {
+    if (href === 'https://simplebits.io/faucet/') {
+        await sleep(3000);
+        const btn = document.querySelectorAll('button div.flex.items-center.justify-center');
+        if (btn.length > 0) {
+            btn[0].click();
+            await sleep(1000);
+        }
+        setCookie('index', index + 1);
+        setCookie('status', 'none');
+        window.location.reload();
+    } else {
+        window.location.replace('https://simplebits.io/faucet');
     }
 }
 
