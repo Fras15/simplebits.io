@@ -1,4 +1,18 @@
 const href = window.location.href;
+async function postData(url = '', data = {}) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Allow-Methods': 'GET,HEAD,OPTIONS,POST,PUT',
+            'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        },
+        body: JSON.stringify(data)
+    });
+    return response;
+}
 function setCookie(name, value) {
     var expires = "";
     var date = new Date();
@@ -221,15 +235,27 @@ async function startUp() {
 async function mining(index) {
     if (href.startsWith('https://simplebits.io/mining')) {
         if (href === 'https://simplebits.io/mining/') {
-            await sleep(3000);
-            document.getElementsByClassName('flex items-center justify-center')[15].click();
+            let btns = document.querySelectorAll('button div.flex.items-center.justify-center');
+            while (true) {
+                await sleep(1000);
+                btns = document.querySelectorAll('button div.flex.items-center.justify-center');
+                if (btns.length === 3) {
+                    break;
+                }
+            }
+            btns[1].click();
             await sleep(1000);
             window.location.reload();
         } else {
             await sleep(3000);
             while (true) {
-                const ene = parseInt(document.getElementsByClassName('text-xs text-teal-500')[0].innerText.split(' ')[0], 10);
-                const dom = parseInt(document.getElementsByClassName('text-xs text-indigo-400')[0].innerText.split(' ')[0], 10);
+                const ENE = document.querySelector('div.text-xs.text-teal-500');
+                const DOM = document.querySelector('div.text-xs.text-indigo-400');
+                if (!ENE || !DOM) {
+                    window.location.reload();
+                }
+                const ene = parseInt(ENE.innerText.split(' ')[0], 10);
+                const dom = parseInt(DOM.innerText.split(' ')[0], 10);
                 if (ene <= 0 && dom <= 0) {
                     break;
                 }
@@ -260,7 +286,6 @@ async function mining(index) {
             }
             setCookie('index', index + 1);
             setCookie('status', 'none');
-            console.log('end');
             window.location.reload();
         }
     } else {
@@ -273,7 +298,14 @@ async function upLevel(index) {
     if (href === 'https://simplebits.io/stats/') {
         await sleep(1000);
         while (true) {
-            const points = parseInt(document.getElementsByClassName('text-xl font-bold')[0].innerText, 10);
+            const POINTS = document.querySelector('div.text-xl.font-bold');
+            if (!POINTS) {
+                window.location.reload();
+            }
+            const points = parseInt(POINTS.innerText, 10);
+            if (isNaN(points)) {
+                window.location.reload();
+            }
             if (points === 0) {
                 break;
             }
@@ -355,9 +387,9 @@ async function miningLog(index) {
 async function faucet(index) {
     if (href === 'https://simplebits.io/faucet/') {
         await sleep(3000);
-        const btn = document.querySelectorAll('button div.flex.items-center.justify-center');
-        if (btn.length > 0) {
-            btn[0].click();
+        const btn = document.querySelector('div.flex.py-2.flex-col.items-center.justify-center button div.flex.items-center.justify-center');
+        if (btn) {
+            btn.click();
             await sleep(1000);
         }
         setCookie('index', index + 1);
@@ -368,4 +400,5 @@ async function faucet(index) {
     }
 }
 
-init();
+// init();
+startUp();
