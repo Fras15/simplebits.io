@@ -400,5 +400,90 @@ async function faucet(index) {
     }
 }
 
+async function shortLinks(index) {
+    if (href === 'https://simplebits.io/shortlinks/') {
+        await sleep(3000);
+        while (true) {
+            const btns = document.querySelectorAll('div.px-4.w-full.mx-4 button div.flex.items-center.justify-center');
+            const title = btns[0].parentElement.parentElement.parentElement.parentElement.innerText.split('\n')[0]
+            let brk = false;
+            switch (title) {
+                // case 'ADBULL': {
+                //     adbull(btns[0]);
+                //     break;
+                // }
+                // case 'ADSHORT': {
+                //     adshort(btns[0]);
+                //     break;
+                // }
+                // case 'CCURL': {
+                //     ccurl(btns[0]);
+                //     break;
+                // }
+                // case 'COIN.MG': {
+                //     coinMg(btns[0]);
+                //     break;
+                // }
+                // case 'DUTCHYSHORT2': {
+                //     dutchyshort2(btns[0]);
+                //     break;
+                // }
+                // case 'DUTCHYSHORT3': {
+                //     dutchyshort3(btns[0]);
+                //     break;
+                // }
+                // case 'DUTCHYSHORT8': {
+                //     dutchyshort8(btns[0]);
+                //     break;
+                // }
+                // case 'EXE.IO': {
+                //     exeIo(btns[0]);
+                //     break;
+                // }
+                // case 'GETITALL.TOP': {
+                //     getitallTop(btns[0]);
+                //     break;
+                // }
+                // case 'HITBITS SL': {
+                //     hitbitsSl(btns[0]);
+                //     break;
+                // }
+                // case 'PENTA.SL': {
+                //     pentaSl(btns[0]);
+                //     break;
+                // }
+                // case 'SHRINKEARN': {
+                //     shrinkearn(btns[0]);
+                //     break;
+                // }
+                // case 'SHRINKPE': {
+                //     shrinkPe(btns[0]);
+                //     break;
+                // }
+                // case 'SIMPLE SL': {
+                //     simpleSl(btns[0]);
+                //     break;
+                // }
+                // case 'S.LABS SL': {
+                //     sLabsSl(btns[0]);
+                //     break;
+                // }
+                default: {
+                    brk = true
+                }
+            }
+
+            if (btns.length === 0 || brk) {
+                break;
+            }
+        }
+        setCookie('index', index + 1);
+        setCookie('status', 'none');
+        window.location.reload();
+    } else {
+        window.location.replace('https://simplebits.io/shortlinks');
+    }
+}
+
 // init();
 startUp();
