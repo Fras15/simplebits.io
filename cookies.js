@@ -1,2 +1,2 @@
-const cookies = require('./cookies_old.json');
+const cookies = require('./cookies.json');
 console.log(cookies.length)
